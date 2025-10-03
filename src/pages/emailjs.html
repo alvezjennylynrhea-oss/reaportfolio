@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmailJS Template - Portfolio Contact</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .email-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .email-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1) 0px,
+                rgba(255,255,255,0.1) 1px,
+                transparent 1px,
+                transparent 20px
+            );
+            animation: shimmer 20s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .email-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .email-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .email-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        .email-body {
+            padding: 40px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        }
+        
+        .greeting {
+            font-size: 1.8rem;
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .message-intro {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .contact-details {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid #4a90e2;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .detail-icon {
+            font-size: 1.2rem;
+            color: #4a90e2;
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #495057;
+            min-width: 80px;
+        }
+        
+        .detail-value {
+            color: #212529;
+            font-weight: 500;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid #28a745;
+        }
+        
+        .message-title {
+            color: #28a745;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .message-text {
+            color: #495057;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 3px solid #28a745;
+        }
+        
+        .email-footer {
+            background: #343a40;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .footer-line {
+            width: 50px;
+            height: 3px;
+            background: #4a90e2;
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+        
+        .sparkle {
+            color: #ffd700;
+            animation: sparkle 1.5s infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        .variable {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <div class="email-icon">
+                <i class="fas fa-envelope-open sparkle"></i>
+            </div>
+            <h1>New Message!</h1>
+            <p>You've got mail from your portfolio</p>
+        </div>
+        
+        <div class="email-body">
+            <div class="greeting">
+                Hello! <i class="fas fa-hand-wave sparkle"></i>
+            </div>
+            
+            <div class="message-intro">
+                You have a <strong>new message</strong> from your portfolio contact form:
+            </div>
+            
+            <div class="contact-details">
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value variable">{{name}}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value variable">{{email}}</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <div class="detail-label">Subject:</div>
+                    <div class="detail-value variable">{{subject}}</div>
+                </div>
+            </div>
+            
+            <div class="message-content">
+                <div class="message-title">
+                    <i class="fas fa-comment-dots"></i>
+                    Message:
+                </div>
+                <div class="message-text variable">{{message}}</div>
+            </div>
+        </div>
+        
+        <div class="email-footer">
+            <div class="footer-line"></div>
+            <div class="footer-text">
+                <i class="fas fa-paper-plane"></i>
+                Sent from your amazing portfolio contact form
+            </div>
+        </div>
+    </div>
+</body>
+</html>

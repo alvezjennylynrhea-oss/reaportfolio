@@ -9,11 +9,11 @@ const Home = () => {
           <div className="hero-text">
             <h1 className="hero-title">
               <span className="title-line">Welcome to my</span>
-              <span className="title-line gradient-text">Sacred Life!</span>
+              <span className="title-line gradient-text">Cold Life!</span>
             </h1>
             <p className="hero-description">
-              A developer and programmer with a passion for flying and coding solutions. 
-              C'mon, let's explore this concept together!
+              A developer with a passion for creating beautiful and user-friendly systems
+              for the web. Let's build something amazing together.
             </p>
             <div className="hero-buttons">
               <Link to="/about" className="btn btn-primary">
