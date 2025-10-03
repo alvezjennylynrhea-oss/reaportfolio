@@ -1,13 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './Sidebar.css'
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const location = useLocation()
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+      if (window.innerWidth > 768) {
+        setIsMobileOpen(false)
+      }
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileOpen(false)
+  }, [location])
+
   const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed)
+    if (isMobile) {
+      setIsMobileOpen(!isMobileOpen)
+    } else {
+      setIsCollapsed(!isCollapsed)
+    }
   }
 
   const isActive = (path: string) => {
@@ -17,7 +41,29 @@ const Sidebar = () => {
   }
 
   return (
-    <nav className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+    <>
+      {/* Mobile Menu Button */}
+      {isMobile && (
+        <button 
+          className={`mobile-menu-btn ${isMobileOpen ? 'open' : ''}`}
+          onClick={toggleSidebar}
+          aria-label="Toggle navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      )}
+
+      {/* Mobile Overlay */}
+      {isMobile && isMobileOpen && (
+        <div 
+          className="mobile-overlay" 
+          onClick={() => setIsMobileOpen(false)}
+        ></div>
+      )}
+
+      <nav className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}>
       <div className="sidebar-header">
         <div className="logo">
           <i className="fas fa-snowflake"></i>
@@ -94,6 +140,7 @@ const Sidebar = () => {
         </div>
       </div>
     </nav>
+    </>
   )
 }
 
