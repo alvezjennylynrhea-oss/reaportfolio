@@ -1,69 +1,143 @@
-# React + TypeScript + Vite
+# Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+[View Live Site](https://your-site-name.netlify.app) *(Update this URL after deployment)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- **Modern React 19** with TypeScript
+- **Responsive Design** - Works on all devices
+- **Dark/Light Theme Toggle** 
+- **Contact Form** with EmailJS integration
+- **Smooth Animations** and transitions
+- **SEO Optimized**
+- **Fast Performance** with Vite
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React 19
+- TypeScript
+- Vite
+- React Router DOM
+- EmailJS
+- CSS3 with custom properties
+- Font Awesome icons
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 📧 Contact Form Setup
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The contact form uses EmailJS to send emails to: `alvezjennylynrhea@gmail.com`
+
+### Environment Variables Required:
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Deployment on Netlify
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Automatic Deployment from GitHub:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. **Push to GitHub:**
+   ```bash
+   git add .
+   git commit -m "Initial portfolio setup"
+   git push origin main
+   ```
+
+2. **Connect to Netlify:**
+   - Go to [Netlify](https://netlify.com)
+   - Click "New site from Git"
+   - Choose GitHub and select your repository
+   - Netlify will auto-detect the build settings from `netlify.toml`
+
+3. **Set Environment Variables in Netlify:**
+   - Go to Site Settings → Environment Variables
+   - Add your EmailJS credentials:
+     - `VITE_EMAILJS_SERVICE_ID`
+     - `VITE_EMAILJS_TEMPLATE_ID` 
+     - `VITE_EMAILJS_PUBLIC_KEY`
+
+4. **Deploy:**
+   - Netlify will automatically build and deploy
+   - Every push to main branch triggers a new deployment
+
+### Build Configuration:
+- **Build Command:** `npm run build`
+- **Publish Directory:** `dist`
+- **Node Version:** 18
+
+## 🏃‍♂️ Local Development
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Create .env file:**
+   ```bash
+   # Copy your EmailJS credentials here
+   VITE_EMAILJS_SERVICE_ID=your_service_id
+   VITE_EMAILJS_TEMPLATE_ID=your_template_id
+   VITE_EMAILJS_PUBLIC_KEY=your_public_key
+   ```
+
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+## 📂 Project Structure
+
 ```
+src/
+├── components/          # Reusable components
+│   ├── Sidebar.tsx     # Navigation sidebar
+│   ├── ThemeToggle.tsx # Dark/light theme toggle
+│   └── SnowParticles.tsx # Animated background
+├── pages/              # Page components
+│   ├── Home.tsx        # Landing page
+│   ├── About.tsx       # About section
+│   ├── Portfolio.tsx   # Projects showcase
+│   ├── Skills.tsx      # Skills section
+│   └── Contact.tsx     # Contact form
+├── styles/             # Global styles
+│   └── globals.css     # CSS variables and global styles
+└── App.tsx             # Main app component
+```
+
+## 🎨 Customization
+
+- **Colors:** Edit CSS variables in `src/styles/globals.css`
+- **Content:** Update page components in `src/pages/`
+- **Navigation:** Modify `src/components/Sidebar.tsx`
+- **Styling:** Each component has its own CSS file
+
+## 📱 Responsive Design
+
+- Mobile-first approach
+- Breakpoints: 768px (tablet), 1024px (desktop)
+- Flexible grid layouts
+- Touch-friendly navigation
+
+## 🔧 Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production  
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+Built with ❤️ by [Your Name]
