@@ -9,10 +9,7 @@
   # Increase memory limit for Node.js
   NODE_OPTIONS = "--max_old_space_size=4096"
 
-# Environment variables for production (you'll set these in Netlify dashboard)
-# VITE_EMAILJS_SERVICE_ID = "your_service_id"
-# VITE_EMAILJS_TEMPLATE_ID = "your_template_id" 
-# VITE_EMAILJS_PUBLIC_KEY = "your_public_key"
+# Environment variables are now configured via Netlify CLI
 
 # Redirect rules for SPA (Single Page Application)
 [[redirects]]
