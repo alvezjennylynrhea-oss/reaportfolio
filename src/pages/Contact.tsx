@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import './Contact.css';
 
@@ -19,6 +19,23 @@ const Contact = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [isEmailJSReady, setIsEmailJSReady] = useState(false);
+
+  useEffect(() => {
+    // Initialize EmailJS with the public key
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    
+    if (publicKey) {
+      emailjs.init(publicKey);
+      setIsEmailJSReady(true);
+    } else {
+      console.error('EmailJS public key not found in environment variables');
+      setMessage({ 
+        type: 'error', 
+        text: 'Email service is not configured properly. Please contact me directly at alvezjennylynrhea@gmail.com' 
+      });
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -33,9 +50,37 @@ const Contact = () => {
     
     if (!form.current) return;
 
+    // Check if EmailJS is ready
+    if (!isEmailJSReady) {
+      setMessage({ 
+        type: 'error', 
+        text: 'Email service is not available. Please contact me directly at alvezjennylynrhea@gmail.com' 
+      });
+      return;
+    }
+
     // Validate form
     if (!formData.name || !formData.email || !formData.message) {
       setMessage({ type: 'error', text: 'Please fill in all required fields.' });
+      return;
+    }
+
+    // Validate environment variables
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error('Missing EmailJS configuration:', {
+        serviceId: !!serviceId,
+        templateId: !!templateId,
+        publicKey: !!publicKey
+      });
+      
+      setMessage({ 
+        type: 'error', 
+        text: 'Email service configuration is incomplete. Please contact me directly at alvezjennylynrhea@gmail.com' 
+      });
       return;
     }
 
@@ -44,10 +89,10 @@ const Contact = () => {
 
     try {
       const result = await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        serviceId,
+        templateId,
         form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        publicKey
       );
 
       if (result.status === 200) {
@@ -56,7 +101,10 @@ const Contact = () => {
       }
     } catch (error) {
       console.error('EmailJS error:', error);
-      setMessage({ type: 'error', text: 'Failed to send message. Please try again later.' });
+      setMessage({ 
+        type: 'error', 
+        text: 'Failed to send message. Please contact me directly at alvezjennylynrhea@gmail.com or try again later.' 
+      });
     } finally {
       setIsLoading(false);
     }
@@ -112,7 +160,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  disabled={isLoading}
+                  disabled={isLoading || !isEmailJSReady}
                 />
               </div>
 
@@ -125,7 +173,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  disabled={isLoading}
+                  disabled={isLoading || !isEmailJSReady}
                 />
               </div>
 
@@ -137,7 +185,7 @@ const Contact = () => {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  disabled={isLoading}
+                  disabled={isLoading || !isEmailJSReady}
                 />
               </div>
 
@@ -150,19 +198,24 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  disabled={isLoading}
+                  disabled={isLoading || !isEmailJSReady}
                 ></textarea>
               </div>
 
               <button 
                 type="submit" 
                 className="submit-btn"
-                disabled={isLoading}
+                disabled={isLoading || !isEmailJSReady}
               >
                 {isLoading ? (
                   <>
                     <i className="fas fa-spinner fa-spin"></i>
                     Sending...
+                  </>
+                ) : !isEmailJSReady ? (
+                  <>
+                    <i className="fas fa-exclamation-triangle"></i>
+                    Service Unavailable
                   </>
                 ) : (
                   <>
